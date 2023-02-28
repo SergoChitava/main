@@ -11,6 +11,20 @@ services:
       - .:/app
     ports:
       - "8000:8000"
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=sergo
+      - POSTGRES_PASSWORD=12345678
+    networks:
+      - es-net
+    ports:
+      - '5432:5432'
+    volumes:
+      - /var/lib/postgresql/data
+    depends_on:
+      - web_api
   nginx:
     build:
       context: ./nginx
